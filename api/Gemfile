@@ -1,3 +1,6 @@
 source 'https://rubygems.org'
 gem 'sinatra', '~>1.4.7'
 gem 'thin', '~>1.6'
+gem 'sequel', '~>4.38'
+gem 'jeremyevans-postgres-pr', '~> 0.6.6'
+gem 'rack-mount', '~> 0.8.3'
