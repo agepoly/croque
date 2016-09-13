@@ -1,5 +1,5 @@
-class App < Sinatra::Base
-	post '/api/user' do
+class UserApp < Sinatra::Base
+	post '/users' do
 		if params['sciper'] && params['email'] && params['firstname'] && params['lastname']
 			User.new(:sciper => params['sciper'].to_i, :email => params['email'], :firstname => params['firstname'], :lastname => params['lastname']).save
 			200
@@ -8,14 +8,14 @@ class App < Sinatra::Base
 		end
 	end
 
-	get '/api/user' do
+	get '/users' do
 		@out = ""
 		User.each { |u| @out+="x=>"+u.email+"<br/>" }
 		@out
 	end
 
 	# Confirm Login was done well and get info
-  post '/api/tequila/checklogin' do
+  post '/checklogin' do
 		@proxy = Net::HTTP.new('tequila.epfl.ch', 80)
 		if params['key']
 			@res = @proxy.post('/cgi-bin/tequila/fetchattributes', 'key='+params['key'])

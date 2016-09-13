@@ -5,11 +5,20 @@ services:
     build: ./nginx
     depends_on:
       - api
+      - admin
     ports:
-      - "8080:80"
+      - "8080:8080"
+      - "8081:8081"
 
   api:
     build: ./api
+    ports:
+      - "8080"
+    depends_on:
+      - db
+
+  admin:
+    build: ./admin
     ports:
       - "8080"
     depends_on:
