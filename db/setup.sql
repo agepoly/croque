@@ -6,10 +6,22 @@ create table users (
 	description integer[]
 );
 
+create table menus (
+	id serial primary key,
+	date date unique
+);
+
 create table questions (
-	date_asked date not null,
-	question_body text,
-	answers text[]
+	id serial primary key,
+	body text
+);
+
+create table answers (
+	id serial primary key,
+	question integer references questions,
+	body text,
+	place integer,
+	score integer
 );
 
 create table lunches (
@@ -22,7 +34,7 @@ create table lunch_user (
 	lunch_id integer references lunches
 );
 
-create table subjects (
-	subject_id serial primary key,
-	body text not null
+create table menu_question (
+	menu_id integer references menus,
+	question_id integer references questions
 );

@@ -3,7 +3,7 @@ GEM
   specs:
     daemons (1.2.4)
     eventmachine (1.2.0.1)
-    jeremyevans-postgres-pr (0.6.6)
+    pg (0.18.4)
     rack (1.6.4)
     rack-mount (0.8.3)
       rack (>= 1.0.0)
@@ -24,7 +24,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  jeremyevans-postgres-pr (~> 0.6.6)
+  pg (~> 0.18.4)
   rack-mount (~> 0.8.3)
   sequel (~> 4.38)
   sinatra (~> 1.4.7)

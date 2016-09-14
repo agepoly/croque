@@ -1,19 +1,19 @@
 #!/usr/local/bin/ruby
 require 'sinatra/base'
 require 'rack/mount'
-require 'net/http'
 require 'sequel'
+require 'date'
 
 require './models'
 
 class Admin < Sinatra::Base
 	get '/' do
 		protected!
-		"Bravo, t'es un bon!"
+		erb :'index', :layout => :'layout'
 	end
 
 	get '/login' do
-		'<form action="/login" method="post"><input type="text" name="login" placeholder="Username"><input type="password" name="password" placeholder="Password"><input type="submit" value="Login"></form>'
+		erb :'login', :layout => :'layout'
 	end
 
 	post '/login' do
@@ -25,18 +25,82 @@ class Admin < Sinatra::Base
 		end
 	end
 
+	get '/menus' do
+		protected!
+		erb :'menus/index', :layout => :'layout'
+	end
+
+	get '/questions' do
+		protected!
+		@questions = Question.order(Sequel.desc(:id))
+		erb :'questions/index', :layout => :'layout'
+	end
+
+	post '/questions' do
+		protected!
+		if params[:question]
+			Question.new(:body => params[:question]).save
+		end
+		redirect '/questions'
+	end
+
+	get '/questions/:id' do
+		protected!
+		@q = Question[params[:id].to_i]
+		if @q
+			erb :'questions/edit', :layout => :'layout'
+		else
+			redirect '/questions'
+		end
+	end
+
+	post '/questions/:id' do
+		protected!
+		@q = Question[params[:id].to_i]
+		if @q && params[:question]
+			@q.update(:body => params[:question]).save
+		end
+		redirect '/questions'
+	end
+
+	post '/questions/:id/delete' do
+		protected!
+		@q = Question[params[:id].to_i]
+		if @q
+			@q.delete
+		end
+		redirect '/questions'
+	end
+
+	get '/menus' do
+		protected!
+		erb :'menus/index', :layout => :'layout'
+	end
+
+	post '/menus' do
+		protected!
+	end
+
 	helpers do
 		def protected!
-			if session[:logged] == "admin_true"
+			if authorized?
 				true
 			else
 				halt 401, "401 - Not authorized. <a href=\"/login\">Login &raquo;</a>\n"
+			end
+		end
+
+		def authorized?
+			if session[:logged] == "admin_true"
+				true
+			else
+				false
 			end
 		end
 	end
 
 	set :port, 8080
 	set :bind, '0.0.0.0'
-	enable :sessions
+	use Rack::Session::Cookie, :key => 'rack.session', :path => '/', :secret => 'MANGER'
 	run!
 end

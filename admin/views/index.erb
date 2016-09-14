@@ -1,0 +1,2 @@
+<p>Déjà <b><%= User.count %></b> utilisateurs, et <b><%= Lunch.count %></b> repas organisés.</p>
+<p>Il y a <b><%= Lunch.where(:date => Date.today).count %></b> repas organisés aujourd'hui !</p>

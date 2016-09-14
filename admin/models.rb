@@ -5,7 +5,9 @@ class User < Sequel::Model
 end
 User.unrestrict_primary_key
 
-#class Lunch < Sequel::Model
-#	many_to_many :users
-#end
+class Lunch < Sequel::Model
+	many_to_many :users
+end
 
+class Question < Sequel::Model
+end

@@ -1,0 +1,7 @@
+<h1>Question <%= @q.id %></h1>
+<h4><%= @q.body %></h4>
+<form action="/questions/<%= @q.id %>" method="post">
+	<input type="text" name="question" placeholder="Question">
+	<input type="submit" value="Éditer">
+</form>
+<a href="/questions/<%= @q.id %>/delete">[supprimer]</a>
