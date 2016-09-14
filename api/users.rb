@@ -1,6 +1,8 @@
 class UserApp < Sinatra::Base
+	# Creates a new user (temporary)
 	post '/users' do
 		if params['sciper'] && params['email'] && params['firstname'] && params['lastname']
+			# Adds a user to the database using the User object (see models.rb)
 			User.new(:sciper => params['sciper'].to_i, :email => params['email'], :firstname => params['firstname'], :lastname => params['lastname']).save
 			200
 		else
@@ -8,6 +10,7 @@ class UserApp < Sinatra::Base
 		end
 	end
 
+	# Lists all users (temporary)
 	get '/users' do
 		@out = ""
 		User.each { |u| @out+="x=>"+u.email+"<br/>" }
@@ -33,7 +36,4 @@ class UserApp < Sinatra::Base
 	# Setting basic options
   set :port, 8080
   set :bind, '0.0.0.0'
-	# enable :logging
-  # Let's go !!
-  # run!
 end

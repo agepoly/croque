@@ -1,4 +1,5 @@
 class PublicApp < Sinatra::Base
+	# Gives the menu for the day
 	get '/' do
 		@menu = Menu.where(:date => Date.today).first
 		if @menu
