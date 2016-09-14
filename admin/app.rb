@@ -68,24 +68,59 @@ class Admin < Sinatra::Base
 	end
 
 	# Delete a question
-	post '/questions/:id/delete' do
+	get '/questions/:id/delete' do
 		protected!
 		@q = Question[params[:id].to_i]
 		if @q
+			Menu.where(:questions => @q).each{|m| m.remove_question(@q)}
+			# Same for answers
 			@q.delete
 		end
 		redirect '/questions'
 	end
 
-	# This will list the menus, with a focus for today's menu
+	# Menu list for today and the ten days surounding it
 	get '/menus' do
 		protected!
+		@today = Date.today
+		@menus = [*-5..5].map{|i|
+			{
+				:date => @today + i,
+				:menu => Menu.where(:date => @today + i.to_i).first
+			}
+		}
 		erb :'menus/index', :layout => :'layout'
 	end
 
 	# This will create a new menu
-	post '/menus' do
+	get '/menus/:date' do
 		protected!
+		if real_date? params[:date]
+			if !Menu.where(:date => Date.parse(params[:date])).first
+				Menu.new(:date => Date.parse(params[:date])).save
+			end
+			@menu = Menu.where(:date => Date.parse(params[:date])).first
+			erb :'menus/edit', :layout => :'layout'
+		else
+			redirect '/menus'
+		end
+	end
+
+	get '/menus/:date/questions/:id' do
+		protected!
+		if real_date? params[:date]
+			@menu = Menu.where(:date => Date.parse(params[:date])).first
+			@question = Question[params[:id].to_i]
+			if @menu && @question
+				if !@menu.questions.include? @question
+					@menu.add_question(@question)
+				else
+					@menu.remove_question(@question)
+				end
+				redirect "/menus/#{@menu.date}"
+			end
+		end
+		redirect '/menus'
 	end
 
 	helpers do
@@ -106,6 +141,11 @@ class Admin < Sinatra::Base
 				false
 			end
 		end
+
+		def real_date? date
+			return Date.valid_date? *date.split("-").map{|i| i.to_i}
+		end
+
 	end
 
 	set :port, 8080

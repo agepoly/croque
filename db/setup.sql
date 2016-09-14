@@ -29,12 +29,12 @@ create table lunches (
 	date date not null
 );
 
-create table lunch_user (
+create table lunches_users (
 	user_id integer references users,
 	lunch_id integer references lunches
 );
 
-create table menu_question (
+create table menus_questions (
 	menu_id integer references menus,
 	question_id integer references questions
 );

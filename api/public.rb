@@ -3,10 +3,7 @@ class PublicApp < Sinatra::Base
 	get '/' do
 		@menu = Menu.where(:date => Date.today).first
 		if @menu
-			{
-				:subject => @q.question_subject,
-				:question => @q.question_body
-			}.to_json
+			"There is hope".to_json
 		else
 			{:subject => "Pas Disponible"}.to_json
 		end

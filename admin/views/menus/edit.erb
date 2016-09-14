@@ -1,0 +1,13 @@
+<h1>Menu du <%= @menu.date %></h1>
+<% if @menu.questions.count != 0 %>
+<ul>
+  <% @menu.questions.each do |q| %>
+  <li>(<%= q.id %>) <%= q.body %></li>
+  <% end %>
+</ul>
+<% else %>
+<p>Ce menu n'a pas de question</p>
+<% end %>
+<% Question.each do |q| %>
+  <p>(<%= q.id %>) <%= q.body %> <a href="/menus/<%= @menu.date %>/questions/<%= q.id %>">[ajouter/supprimer]</a></p>
+<%end%>

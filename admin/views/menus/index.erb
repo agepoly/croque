@@ -1,0 +1,33 @@
+<!-- Liste des menus -->
+<% @menus.each do |m| %>
+	<p>
+		<%= "<b>" if m[:date] == @today %>
+
+		<!-- Date -->
+		<%= m[:date] %> -
+
+		<!-- Menu -->
+		<% if m[:menu] %>
+			<% @q = m[:menu].questions %>
+
+			<% if @q.count > 0 %>
+
+				<ul>
+					<% @q.each do |q| %>
+
+						<li><%= q.body %></li>
+
+					<% end %>
+				</ul>
+
+			<% else %>
+				Pas de question pour ce menu <a href="/menus/<%= m[:date] %>">[ajouter]</a>
+			<% end %>
+
+		<% else %>
+			Pas de menu pour cette date... <a href="/menus/<%= m[:date] %>">[créer]</a>
+		<% end %>
+
+		<%= "</b>" if m[:date] == @today %>
+	</p>
+<% end %>
