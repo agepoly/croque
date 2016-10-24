@@ -3,9 +3,15 @@ class PublicApp < Sinatra::Base
 	get '/' do
 		@menu = Menu.where(:date => Date.today).first
 		if @menu
-			"There is hope".to_json
+			@menu.questions.map{ |q|
+				{
+					id: q.id,
+					body: q.body,
+					answers: q.answers.map{|a| {place: a.place, body: a.body}}
+				}
+			}.to_json
 		else
-			{:subject => "Pas Disponible"}.to_json
+			"CLOSED".to_json
 		end
 	end
 

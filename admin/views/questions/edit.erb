@@ -1,7 +1,26 @@
-<h1>Question <%= @q.id %></h1>
+<h1>Question
+	<%= @q.id %></h1>
 <h4><%= @q.body %></h4>
 <form action="/questions/<%= @q.id %>" method="post">
 	<input type="text" name="question" placeholder="Question">
 	<input type="submit" value="Éditer">
 </form>
 <a href="/questions/<%= @q.id %>/delete">[supprimer]</a>
+<h2>Réponses :<h2>
+<ul>
+	<% @q.answers_dataset.order(:place).each do |a| %>
+		<li>
+			[<%= a.place %>] <%= a.body %>
+			<form action="/answers/<%= a.id %>" method="post">
+				<input type="text" name="body" placeholder="Modifier">
+				<input type="number" name="place" placeholder="Place">
+				<input type="submit" value="Editer">
+			</form>
+		</li>
+	<% end %>
+</ul>
+<form action="/questions/<%= @q.id %>/answers" method="post">
+	<input type="text" name="body" placeholder="Nouvelle réponse">
+	<input type="number" name="place" placeholder="Place">
+	<input type="submit" value="Ajouter">
+</form>

@@ -15,8 +15,16 @@ end
 
 class Question < Sequel::Model
 	many_to_many :menus
+	one_to_many :answers
 end
 
 class Menu < Sequel::Model
 	many_to_many :questions
+end
+
+class Answer < Sequel::Model
+	many_to_one :question
+end
+
+class Lunchrequest < Sequel::Model
 end

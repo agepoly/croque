@@ -10,10 +10,25 @@ class Lunch < Sequel::Model
 	many_to_many :users
 end
 
+class Lunchrequest < Sequel::Model
+	many_to_many :answers
+end
+
 class Question < Sequel::Model
+	many_to_many :menus
+	one_to_many :answers
+end
+
+class Answer < Sequel::Model
+	many_to_one :question
+	many_to_many :lunchrequests
 end
 
 class Menu < Sequel::Model
+	many_to_many :questions
+end
+
+class Distribution < Sequel::Model
 end
 
 #if !Question.where(:date_asked => Date.today).first
