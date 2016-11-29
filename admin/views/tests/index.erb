@@ -2,5 +2,8 @@
 <p>Requests: <%= @requests.count %></p>
 <p>Lunches: <%= @lunches.count %></p>
 <h4>11h</h4>
+<p><%= @lunches.select{|l| l.time == 11}.count %></p>
 <h4>12h</h4>
+<p><%= @lunches.select{|l| l.time == 12}.count %></p>
 <h4>13h</h4>
+<p><%= @lunches.select{|l| l.time == 13}.count %></p>

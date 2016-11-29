@@ -3,8 +3,10 @@ require 'sinatra/base'
 require 'rack/mount'
 require 'sequel'
 require 'date'
+require 'rufus-scheduler'
 
 require './models'
+require './algo'
 
 class Admin < Sinatra::Base
   # Stats page
@@ -163,12 +165,13 @@ class Admin < Sinatra::Base
   get '/tests' do
     protected!
     @requests = Lunchrequest.all
-    @lunches = Lunch.where(date: Date.today)
+    @lunches = Lunch.where(date: Date.today).all
     erb :'tests/index', layout: :layout
   end
 
   get '/tests/distribute' do
     protected!
+    distribute
     redirect back
   end
 

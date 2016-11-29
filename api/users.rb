@@ -70,3 +70,7 @@ class UserApp < Sinatra::Base
   set :bind, '0.0.0.0'
 	helpers HelpersApp
 end
+
+def getDescription(desc)
+	"Un nouvel arrivant"
+end

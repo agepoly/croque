@@ -3,7 +3,7 @@ class LunchApp < Sinatra::Base
     protected!
     @lunch = User[session[:logged]].lunches_dataset.where(date: Date.today).first
     if @lunch
-      {id: @lunch.id, users: @lunch.users}.to_json
+      {id: @lunch[:lunch_id], users: @lunch.users.map{|u| {id: u[:id], name: getDescription(u[:description])}}}.to_json
     else
       "No lunch prepared yet".to_json
     end

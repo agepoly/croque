@@ -6,7 +6,6 @@ require 'sequel'
 require 'date'
 require 'json'
 require 'bcrypt'
-require 'rufus-scheduler'
 
 require './helpers'
 require './models'

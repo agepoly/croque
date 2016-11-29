@@ -28,9 +28,6 @@ class Menu < Sequel::Model
 	many_to_many :questions
 end
 
-class Distribution < Sequel::Model
-end
-
 #if !Question.where(:date_asked => Date.today).first
 #	Question.new(:date_asked => Date.today,
 #							 :question_body => "Quelle est votre couleur  ?",

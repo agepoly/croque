@@ -28,3 +28,6 @@ end
 
 class Lunchrequest < Sequel::Model
 end
+
+class Distribution < Sequel::Model
+end
