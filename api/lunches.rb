@@ -1,5 +1,5 @@
 class LunchApp < Sinatra::Base
-  get '/lunches' do
+  get '/lunch' do
     protected!
     @lunch = User[session[:logged]].lunches_dataset.where(date: Date.today).first
     if @lunch
@@ -9,7 +9,7 @@ class LunchApp < Sinatra::Base
     end
   end
 
-  post '/lunches' do
+  post '/lunch' do
     protected!
     @data = JSON.parse(request.body.read)
     @time = @data['time']

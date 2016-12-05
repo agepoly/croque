@@ -16,8 +16,8 @@ require './public'
 class Routes < Sinatra::Base
   get('/users*') { UserApp.call(env) }
   post('/users*') { UserApp.call(env) }
-  get('/lunches*') { LunchApp.call(env) }
-  post('/lunches*') { LunchApp.call(env) }
+  get('/lunch*') { LunchApp.call(env) }
+  post('/lunch*') { LunchApp.call(env) }
   get('/*') { PublicApp.call(env) }
   post('/*') { PublicApp.call(env) }
 
