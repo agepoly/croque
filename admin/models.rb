@@ -1,8 +1,11 @@
+# Sequel => access to database
+
 DB = Sequel.connect('postgres://hello:coffee@db/')
 
 class User < Sequel::Model
 	many_to_many :lunches
 end
+# Makes it able to use sciper as key
 User.unrestrict_primary_key
 
 Sequel.inflections do |inflect|

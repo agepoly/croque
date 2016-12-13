@@ -1,4 +1,5 @@
 class LunchApp < Sinatra::Base
+  # Check if you have a lunch assigned for today
   get '/lunch' do
     protected!
     @lunch = User[session[:logged]].lunches_dataset.where(date: Date.today).first
@@ -9,6 +10,7 @@ class LunchApp < Sinatra::Base
     end
   end
 
+  # Create a lunch request for you at a specified time for today
   post '/lunch' do
     protected!
     @data = JSON.parse(request.body.read)
@@ -32,6 +34,7 @@ class LunchApp < Sinatra::Base
     end
   end
 
+  # Get all your lunches
   get '/lunches' do
     protected!
     @lunches = User[session[:logged]].lunches_dataset.all
