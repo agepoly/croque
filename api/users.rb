@@ -46,7 +46,13 @@ class UserApp < Sinatra::Base
 
 	# Get a tequila token
 	get '/users/gettoken' do
-
+		@proxy = Net::HTTP.new('tequila.epfl.ch', 80)
+		@res = @proxy.post('/cgi-bin/tequila/createrequest', 'urlaccess=/users/checklogin')
+		if @res.code == "200"
+			return @res.body[4..-1]
+		else
+			return 500
+		end
 	end
 
 	# Confirm Login was done well and get info
